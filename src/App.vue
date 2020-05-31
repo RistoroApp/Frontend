@@ -1,32 +1,43 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-content v-if="!loading">
+      <router-view />
+    </v-content>
+    <v-footer color="white" class="pa-0 elevation-2" app>
+      <ToolBar />
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import menu from "./api/menu/menu";
+import ToolBar from "./components/ToolBar";
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "RistoroApp",
+  components: { ToolBar },
+  data() {
+    return {
+      loading: true
+    };
+  },
+  async created() {
+    this.loading = true;
+    try {
+      let categories = await menu.getAllCategories();
+      await this.$store.dispatch("setCategories", categories);
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+      if (this.$route.name === "category") {
+        let category = categories.find(
+          cat => cat.slug_name === this.$route.params.slug_name
+        );
+        await this.$store.dispatch("setCurretCatId", category._id);
+      }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+      this.loading = false;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+</script>

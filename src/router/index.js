@@ -1,14 +1,32 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Menu from "../views/Menu.vue";
+import Piatti from "../views/Piatti";
+import Dettagli from "../views/Dettagli";
+import Order from "../views/Order";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "Menu",
+    component: Menu
+  },
+  {
+    path: "/piatti/:slug_name",
+    name: "category",
+    component: Piatti
+  },
+  {
+    path: "/dettagli/:slug_name",
+    name: "detail",
+    component: Dettagli
+  },
+  {
+    path: "/order",
+    name: "order",
+    component: Order
   },
   {
     path: "/about",
