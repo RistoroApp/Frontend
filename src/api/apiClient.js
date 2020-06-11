@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.VUE_APP_BASEURL
+  baseURL: sessionStorage.getItem('api-url')
 });
 
 export default api;

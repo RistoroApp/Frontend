@@ -45,6 +45,16 @@
         </v-col>
       </v-row>
     </v-card>
+    <v-card class="my-6" outlined>
+      <v-row align="center" no-gutters>
+        <v-col>
+          <v-card-title>
+            Coperto
+          </v-card-title>
+        </v-col>
+        <v-col cols="auto" class="px-4"> € {{ coperto.value }} </v-col>
+      </v-row>
+    </v-card>
   </v-container>
 </template>
 
@@ -54,6 +64,9 @@ export default {
   computed: {
     order() {
       return this.$store.state.order;
+    },
+    coperto() {
+      return this.$store.getters.getCoperto;
     }
   },
   methods: {}

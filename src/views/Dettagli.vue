@@ -18,9 +18,11 @@
         </v-col>
         <Chips :tags="item.tags" class="ma-4 mt-7" />
       </v-row>
-      <v-row class="mx-4 mt-7" no-gutters align="center">
+      <v-row class="mx-4 mt-2" no-gutters align="center">
         <v-col>
-          <h2 class="ma-0 headline font-weight-light">{{ item.name }}</h2>
+          <h2 class="ma-0 headline font-weight-light">
+            {{ item.name }} {{ item.freezed ? "*" : "" }}
+          </h2>
         </v-col>
         <v-col cols="auto">
           <p class="font-italic font-weight-light ma-0 title">
@@ -29,17 +31,17 @@
         </v-col>
       </v-row>
 
-      <v-card-text v-if="!alDialog" class="pb-12 mb-2">{{
-        item.description
-      }}</v-card-text>
+      <v-card-text v-if="!alDialog" class="pb-12 mb-2">
+        {{ item.description }} <br />
+        {{
+          item.freezed ? "* Questo piatto contiene ingredienti surgelati" : ""
+        }}
+      </v-card-text>
       <v-card-text v-if="alDialog" class="pb-12 mb-2">
-        <span
-          v-for="allergen in item.allergens"
-          :key="allergen._id"
-          class="mb-2"
-        >
-          {{ allergen.name }}: {{ allergen.description }}
-        </span>
+        <p v-for="allergen in item.allergens" :key="allergen._id" class="mb-2">
+          <span class="font-weight-bold">{{ allergen.name }}</span
+          >: {{ allergen.description }}
+        </p>
       </v-card-text>
 
       <v-card-actions
@@ -62,8 +64,9 @@
               color="green lighten-2"
               @click="$store.dispatch('addOrder', item)"
               dark
-              >Aggiungi all'ordine</v-btn
             >
+              Aggiungi all'ordine
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-actions>

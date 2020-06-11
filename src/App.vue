@@ -11,7 +11,10 @@
 
 <script>
 import menu from "./api/menu/menu";
+import api from "./api/apiClient";
+import axios from "axios";
 import ToolBar from "./components/ToolBar";
+import settings from "./api/settings";
 
 export default {
   name: "RistoroApp",
@@ -24,8 +27,21 @@ export default {
   async created() {
     this.loading = true;
     try {
+      if (!sessionStorage.getItem("api-url")) {
+        let res = await axios.get(
+          `${process.env.VUE_APP_APIURL}/services/getApi/${window.location.host}`
+        );
+        sessionStorage.setItem("api-url", res.data.api);
+        api.defaults.baseURL = res.data.api;
+      }
+
       let categories = await menu.getAllCategories();
+      let settings_data = await settings.getAllSettings();
       await this.$store.dispatch("setCategories", categories);
+      await this.$store.dispatch("setAllSettings", settings_data);
+
+      let name = settings_data.find(el => el.name === "Nome Ristorante");
+      window.document.title = name.value;
 
       if (this.$route.name === "category") {
         let category = categories.find(

@@ -11,13 +11,13 @@
         <v-card
           link
           @click="navCategory(category.slug_name, category._id)"
-          img="/background-img.png"
+          img="/background-img-wall.png"
           height="100"
         >
           <v-row align="center" justify="center">
             <v-col class="text-center">
               <v-card-title>
-                <h2 class="display-1 font-weight-thin text-center mx-auto">
+                <h2 class="display-1 font-weight-light text-center mx-auto">
                   {{ category.name }}
                 </h2>
               </v-card-title>

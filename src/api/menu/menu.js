@@ -4,7 +4,6 @@ import store from "../../store/index";
 export default {
   getAllCategories: () =>
     new Promise((resolve, reject) => {
-      console.log("Getting all Categories");
       api
         .get("/menu/category")
         .then(res => resolve(res.data))
