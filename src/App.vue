@@ -29,7 +29,7 @@ export default {
     try {
       if (!sessionStorage.getItem("api-url")) {
         let res = await axios.get(
-          `${process.env.VUE_APP_APIURL}/services/getApi/${window.location.host}`
+          `${process.env.VUE_APP_APIURL}/services/getApi/${window.location.origin}`
         );
         sessionStorage.setItem("api-url", res.data.api);
         api.defaults.baseURL = res.data.api;
