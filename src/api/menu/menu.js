@@ -57,5 +57,12 @@ export default {
         .catch(e => {
           reject(e);
         });
+    }),
+  call: table =>
+    new Promise((resolve, reject) => {
+      api
+        .post(`/menu/order`, { table })
+        .then(res => resolve(res.data))
+        .catch(err => reject(err));
     })
 };

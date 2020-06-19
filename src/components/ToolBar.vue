@@ -49,6 +49,7 @@
           color="green"
           style="border-radius: 20px;"
           class="pa-0"
+          @click="popup = true"
         >
           <h4 class="title font-weight-light white--text text-center">
             Chiama Cameriere
@@ -56,12 +57,26 @@
         </v-btn>
       </v-col>
     </v-row>
+    <v-dialog v-model="popup">
+      <v-text-field type="number" v-model="table"></v-text-field>
+      <v-btn @click="call">
+        Chiama
+      </v-btn>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
+import menu from "../api/menu/menu";
 export default {
   name: "ToolBar",
+  data() {
+    return {
+      popup: false,
+      table: 0,
+      order: null
+    };
+  },
   computed: {
     orders() {
       return this.$store.state.order;
@@ -82,6 +97,13 @@ export default {
   methods: {
     back_route() {
       this.$router.go(-1);
+    },
+    async call() {
+      try {
+        this.order = await menu.call(this.table);
+      } catch (e) {
+        console.log(e);
+      }
     }
   },
   watch: {}
