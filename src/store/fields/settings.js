@@ -11,5 +11,12 @@ export default {
     setAllSettings: ({ commit }, data) => {
       commit("SET_ALL_SETTINGS", data);
     }
+  },
+  getters: {
+    get_color: (state) => (id) => {
+      let theme = state.settings.find(el => el.name === 'Tema');
+      console.log(theme);
+      return theme.value.colors.tags.find(el => el._id === id);
+    }
   }
 };

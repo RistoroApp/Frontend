@@ -36,7 +36,8 @@ export default new Vuex.Store(
     getters: {
       ...categories.getters,
       ...current.getters,
-      ...order.getters
+      ...order.getters,
+      ...settings.getters
     },
 
     modules: {}
