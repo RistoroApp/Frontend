@@ -13,8 +13,8 @@ export default {
     }
   },
   getters: {
-    get_color: (state) => (id) => {
-      let theme = state.settings.find(el => el.name === 'Tema');
+    get_color: state => id => {
+      let theme = state.settings.find(el => el.name === "Tema");
       console.log(theme);
       return theme.value.colors.tags.find(el => el._id === id);
     }

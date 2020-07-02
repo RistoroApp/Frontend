@@ -22,13 +22,13 @@ export default {
   data() {
     return {
       key: "1"
-    }
+    };
   },
   methods: {
     getColor(el) {
       return this.$store.getters.get_color(el.color);
     }
-  },
+  }
 };
 </script>
 
