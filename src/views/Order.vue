@@ -29,23 +29,22 @@
             >
               <v-icon x-small>fas fa-plus</v-icon>
             </v-btn>
+            <v-btn
+                  class="fill-height"
+                  elevation="0"
+                  color="transparent"
+                  @click="$store.dispatch('deleteOrder', item)"
+            >
+              <v-icon small color="red">fas fa-trash</v-icon>
+            </v-btn>
           </v-card-subtitle>
         </v-col>
-        <v-col cols="auto" class="fill-height">
-          <v-card-actions>
-            <v-btn
-              class="fill-height"
-              elevation="0"
-              color="transparent"
-              @click="$store.dispatch('deleteOrder', item)"
-            >
-              <v-icon>fas fa-trash</v-icon>
-            </v-btn>
-          </v-card-actions>
+        <v-col cols="auto" class="fill-height px-4">
+          <span class="font-italic">€ {{ item.price.toFixed(2) }}</span>
         </v-col>
       </v-row>
     </v-card>
-    <v-card class="my-6" outlined>
+    <v-card class="my-6" flat v-if="order.length">
       <v-row align="center" no-gutters>
         <v-col>
           <v-card-title>
@@ -53,6 +52,16 @@
           </v-card-title>
         </v-col>
         <v-col cols="auto" class="px-4"> € {{ coperto.value }} </v-col>
+      </v-row>
+    </v-card>
+    <v-card class="my-6" outlined v-if="order.length">
+      <v-row align="center" no-gutters>
+        <v-col>
+          <v-card-title>
+            Totale
+          </v-card-title>
+        </v-col>
+        <v-col cols="auto" class="px-4"> € {{ totale }}</v-col>
       </v-row>
     </v-card>
   </v-container>
@@ -67,6 +76,16 @@ export default {
     },
     coperto() {
       return this.$store.getters.getCoperto;
+    },
+    totale() {
+      let total = 0;
+      for (let o of this.order) {
+        let o_cost = o.price * o.quantity;
+        total += o_cost;
+      }
+      total += parseFloat(this.coperto.value);
+
+      return total.toFixed(2);
     }
   },
   methods: {}

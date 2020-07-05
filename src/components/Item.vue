@@ -3,7 +3,7 @@
     link
     @click="nav(item.slug_name)"
     style="border-radius: 20px"
-    class="py-2"
+    class="py-2 item"
     elevation="4"
   >
     <v-row align="center" justify="center" no-gutters class="pa-4">

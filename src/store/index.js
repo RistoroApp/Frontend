@@ -8,7 +8,7 @@ import order from "./fields/order";
 import settings from "./fields/settings";
 
 // const vueLocal = new VuexPersistence({
-//   storage: window.localStorage
+//   storage: window.sessionStorage
 // });
 
 Vue.use(Vuex);

@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container v-if="show">
     <v-row>
-      <v-col cols="auto">
+      <v-col cols="auto" v-if="page !== 'Menu'">
         <v-btn
           color="#E8B25B"
           width="50"
@@ -19,8 +19,8 @@
           color="green"
           style="border-radius: 20px;"
           class="pa-0"
-          :to="{ name: 'order' }"
           :disabled="!orders.length"
+          @click="go_order"
         >
           <v-row no-gutters align="center">
             <v-col>
@@ -49,7 +49,8 @@
           color="green"
           style="border-radius: 20px;"
           class="pa-0"
-          @click="popup = true"
+          :disabled="orderSent || !orders.length"
+          @click="openPopup"
         >
           <h4 class="title font-weight-light white--text text-center">
             Chiama Cameriere
@@ -57,9 +58,9 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-dialog v-model="popup">
-      <v-text-field type="number" v-model="table"></v-text-field>
-      <v-btn @click="call">
+    <v-dialog v-model="popup" width="50%" class="">
+      <v-text-field type="number" v-model="table" color="white"></v-text-field>
+      <v-btn @click="call" width="100%">
         Chiama
       </v-btn>
     </v-dialog>
@@ -74,12 +75,16 @@ export default {
     return {
       popup: false,
       table: 0,
-      order: null
+      order: null,
+      show: true
     };
   },
   computed: {
     orders() {
       return this.$store.state.order;
+    },
+    orderSent() {
+      return this.$store.state.orderSent;
     },
     cost() {
       let result = 0;
@@ -98,15 +103,48 @@ export default {
     back_route() {
       this.$router.go(-1);
     },
+    go_order() {
+      this.$router.push({ name: "order" });
+    },
     async call() {
       try {
         this.order = await menu.call(this.table);
+        await this.$store.dispatch("sendOrder");
+        this.popup = false;
       } catch (e) {
         console.log(e);
       }
+    },
+    openPopup() {
+      if (this.page === "order") {
+        this.popup = true;
+      }
+    },
+    handleScroll() {
+      if (this.page === "Menu") {
+        this.show = window.pageYOffset > 80;
+      } else {
+        this.show = true;
+      }
     }
   },
-  watch: {}
+  created() {
+    if (this.$route.path === "/") {
+      this.show = false;
+    }
+    window.addEventListener("scroll", this.handleScroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.handleScroll);
+  },
+
+  watch: {
+    $route(to) {
+      if (to.name === "Menu") {
+        this.show = false;
+      }
+    }
+  }
 };
 </script>
 

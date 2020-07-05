@@ -1,8 +1,8 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="detail-container">
     <v-progress-circular v-if="loading" indeterminate />
     <v-card
-      class="fill-height"
+      class="fill-height pb-2"
       width="100%"
       v-if="!loading"
       style="border-radius: 20px; position: relative"
@@ -14,13 +14,14 @@
             style="border-radius: 20px"
             class="elevation-1"
             cover
+            max-height="300"
           />
         </v-col>
-        <Chips :tags="item.tags" class="ma-4 mt-7" />
+        <Chips :tags="item.tags" class="mx-4 mt-4" />
       </v-row>
-      <v-row class="mx-4 mt-2" no-gutters align="center">
+      <v-row class="mx-4 mt-4" no-gutters align="center">
         <v-col>
-          <h2 class="ma-0 headline font-weight-light">
+          <h2 class="ma-0 headline font-weight-regular">
             {{ item.name }} {{ item.freezed ? "*" : "" }}
           </h2>
         </v-col>
@@ -31,13 +32,15 @@
         </v-col>
       </v-row>
 
-      <v-card-text v-if="!alDialog" class="pb-12 mb-2">
+      <v-card-text v-if="!alDialog" class="pb-12 mb-2 body-1 overflow-y-hidden">
         {{ item.description }} <br />
-        {{
-          item.freezed ? "* Questo piatto contiene ingredienti surgelati" : ""
-        }}
+        <span class="font-weight-bold">
+          {{
+            item.freezed ? "* Questo piatto contiene ingredienti surgelati" : ""
+          }}
+        </span>
       </v-card-text>
-      <v-card-text v-if="alDialog" class="pb-12 mb-2">
+      <v-card-text v-if="alDialog" class="pb-12 mb-2 body-1">
         <p v-for="allergen in item.allergens" :key="allergen._id" class="mb-2">
           <span class="font-weight-bold">{{ allergen.name }}</span
           >: {{ allergen.description }}
@@ -103,6 +106,9 @@ export default {
       );
       this.picture = await menu.getItemPicture(this.item.image);
       this.loading = false;
+
+      let container = document.getElementsByClassName("detail-container")[0];
+      container.style.height = `${window.innerHeight - 100}px`;
     } catch (e) {
       this.error = e;
       console.log(e);

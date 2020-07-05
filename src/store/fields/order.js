@@ -1,21 +1,29 @@
 export default {
   state: {
-    order: []
+    order: [],
+    orderSent: false
   },
   mutations: {
     ADD_ORDER: (state, data) => {
+      state.orderSent = false;
       state.order = data;
     },
     EDIT_ORDER: (state, data) => {
+      state.orderSent = false;
       state.order = data;
+    },
+    SEND_ORDER: state => {
+      state.orderSent = true;
     }
   },
   actions: {
+    sendOrder: ({ commit }) => {
+      commit("SEND_ORDER");
+    },
     addOrder: ({ state, commit }, data) => {
       let orders = [...state.order];
 
       let itemI = state.order.findIndex(el => el._id === data._id);
-      console.log(itemI);
       let item;
 
       if (itemI >= 0) {
@@ -31,7 +39,6 @@ export default {
         item.quantity = 1;
         orders.push(item);
       }
-
       commit("ADD_ORDER", orders);
     },
     increaseOrder: ({ state, commit }, data) => {
@@ -51,7 +58,7 @@ export default {
       commit("EDIT_ORDER", newState);
     },
     deleteOrder: ({ state, commit }, data) => {
-      let newOrder = state.order.find(el => el._id !== data._id);
+      let newOrder = state.order.filter(el => el._id !== data._id);
       if (!newOrder) {
         newOrder = [];
       }

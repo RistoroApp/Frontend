@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app" class="overflow-y-hidden">
     <v-content v-if="!loading">
       <router-view />
     </v-content>
@@ -26,6 +26,7 @@ export default {
   },
   async created() {
     this.loading = true;
+
     try {
       if (!sessionStorage.getItem("api-url")) {
         console.log(process.env.VUE_APP_APIURL);
@@ -64,3 +65,10 @@ export default {
   }
 };
 </script>
+<style>
+#app {
+  max-width: 600px;
+  margin: auto auto;
+  overflow-x: hidden;
+}
+</style>
