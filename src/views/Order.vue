@@ -30,10 +30,10 @@
               <v-icon x-small>fas fa-plus</v-icon>
             </v-btn>
             <v-btn
-                  class="fill-height"
-                  elevation="0"
-                  color="transparent"
-                  @click="$store.dispatch('deleteOrder', item)"
+              class="fill-height"
+              elevation="0"
+              color="transparent"
+              @click="$store.dispatch('deleteOrder', item)"
             >
               <v-icon small color="red">fas fa-trash</v-icon>
             </v-btn>
