@@ -54,7 +54,8 @@ export default {
   },
   computed: {
     categories() {
-      return this.$store.state.categories;
+      let cat = this.$store.state.categories;
+      return cat.sort((a, b) => a.order - b.order);
     },
     headerImage() {
       return require("../assets/menu-background.png");
