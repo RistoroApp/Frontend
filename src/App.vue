@@ -45,6 +45,14 @@ export default {
 
       let categories = await menu.getAllCategories();
       let settings_data = await settings.getAllSettings();
+
+      let index = settings_data.findIndex(el => el.name === "Tema");
+      let resTheme = await axios.get(
+        `${process.env.VUE_APP_APIURL}/theme/getTheme/${settings_data[index].value}`
+      );
+
+      settings_data[index].value = resTheme.data;
+
       await this.$store.dispatch("setCategories", categories);
       await this.$store.dispatch("setAllSettings", settings_data);
 
