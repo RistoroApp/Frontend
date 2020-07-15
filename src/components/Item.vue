@@ -11,8 +11,7 @@
         <v-progress-circular indeterminate v-if="imageLoading" />
         <v-img
           class="image elevation-5 mx-auto"
-          :src="item.avatar"
-          v-if="image"
+          :src="backend + item.image.thumbnail"
           max-height="70"
           max-width="70"
         />
@@ -64,7 +63,13 @@ export default {
       return Array.isArray(item.tags) && item.tags.length;
     }
   },
+  computed: {
+    backend() {
+      return sessionStorage.getItem("api-url");
+    }
+  },
   async mounted() {
+    console.log(this.item.image);
     if (this.item.avatar && !this.item.avatar.startsWith("blob")) {
       try {
         await menu.getItemAvatar(this.item);

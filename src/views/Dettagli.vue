@@ -8,7 +8,7 @@
       style="border-radius: 20px; position: relative; display: grid"
     >
       <img
-        :src="picture"
+        :src="backend + item.image.full"
         alt="image"
         style="border-radius: 20px; height: 300px; width: 100%; display: block; object-fit: cover "
         class="elevation-1"
@@ -73,7 +73,6 @@
 </template>
 
 <script>
-import menu from "../api/menu/menu";
 import Chips from "../components/Chips";
 export default {
   name: "Dettagli",
@@ -87,6 +86,11 @@ export default {
       alDialog: false
     };
   },
+  computed: {
+    backend() {
+      return sessionStorage.getItem("api-url");
+    }
+  },
   methods: {
     allergens() {
       this.alDialog = !this.alDialog;
@@ -98,7 +102,6 @@ export default {
       this.item = await this.$store.getters.currentItem(
         this.$route.params.slug_name
       );
-      this.picture = await menu.getItemPicture(this.item.image);
       this.loading = false;
 
       let container = document.getElementsByClassName("detail-container")[0];

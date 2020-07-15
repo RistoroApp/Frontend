@@ -7,6 +7,7 @@
         :key="al._id"
         :color="getColor(al).background"
         :text-color="getColor(al).text"
+        class="mx-2"
         style="border-radius: 5px"
       >
         <span style="color: white">{{ al.name }}</span>
