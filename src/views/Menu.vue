@@ -2,7 +2,7 @@
   <v-container class="main-container">
     <header class="mx-n3 mt-n6 mb-6" style="position: relative">
       <div class="logo-container">
-        <v-img src="/logo_restaurant.png" id="logo" />
+        <img :src="logoUrl" id="logo" />
       </div>
       <div class="menu-container">
         <h1 class="display-3 font-weight-light white--text">Menu</h1>
@@ -45,20 +45,20 @@
 </template>
 
 <script>
+import media from "../api/menu/media";
+
 export default {
   name: "Home",
   data() {
     return {
-      error: ""
+      error: "",
+      logoUrl: ""
     };
   },
   computed: {
     categories() {
       let cat = this.$store.state.categories;
       return cat.sort((a, b) => a.order - b.order);
-    },
-    headerImage() {
-      return require("../assets/menu-background.png");
     }
   },
   methods: {
@@ -72,6 +72,12 @@ export default {
         return "#ACA897";
       }
     }
+  },
+  async created() {
+    let logo = this.$store.state.settings.find(el => el.name === "Logo");
+    logo = await media.getLogo(logo.value);
+    console.log(logo);
+    this.logoUrl = sessionStorage.getItem("api-url") + logo.full;
   }
 };
 </script>
@@ -93,9 +99,17 @@ export default {
 header {
   height: 100vh;
 }
+
+#logo {
+  display: block;
+  object-fit: contain;
+  height: calc(30vh - 10px);
+}
+
 .logo-container,
 .menu-container,
 .moto-container {
+  object-fit: contain;
   height: 25vh;
   display: flex;
   justify-content: center;
