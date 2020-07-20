@@ -9,7 +9,7 @@
       </div>
       <div class="moto-container">
         <h1 class="display-1 font-weight-thin text-center">
-          Il ristorante di qualità al prezzo giusto.
+          {{ slogan }}
         </h1>
       </div>
       <v-row justify="center" class="text-center">
@@ -59,6 +59,9 @@ export default {
     categories() {
       let cat = this.$store.state.categories;
       return cat.sort((a, b) => a.order - b.order);
+    },
+    slogan() {
+      return this.$store.state.settings.find(el => el.name === "Slogan").value;
     }
   },
   methods: {
@@ -75,6 +78,7 @@ export default {
   },
   async created() {
     let logo = this.$store.state.settings.find(el => el.name === "Logo");
+    console.log(logo);
     logo = await media.getLogo(logo.value);
     console.log(logo);
     this.logoUrl = sessionStorage.getItem("api-url") + logo.full;
