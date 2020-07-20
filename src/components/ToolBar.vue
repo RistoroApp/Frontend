@@ -59,10 +59,17 @@
       </v-col>
     </v-row>
     <v-dialog v-model="popup" width="50%" class="">
-      <v-text-field type="number" v-model="table" color="white"></v-text-field>
-      <v-btn @click="call" width="100%">
-        Chiama
-      </v-btn>
+      <v-container style="background-color: white">
+        <h1 class="title">Inserisci il numero del tavolo</h1>
+        <v-text-field
+          type="number"
+          v-model="table"
+          color="white"
+        ></v-text-field>
+        <v-btn @click="call" width="100%">
+          Chiama
+        </v-btn>
+      </v-container>
     </v-dialog>
   </v-container>
 </template>
