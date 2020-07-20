@@ -27,7 +27,11 @@ export default {
   },
   methods: {
     getColor(el) {
-      return this.$store.getters.get_color(el.color);
+      if(el.color) {
+        return this.$store.getters.get_color(el.color);
+      } else {
+        return this.$store.getters.random_color;
+      }
     }
   }
 };
