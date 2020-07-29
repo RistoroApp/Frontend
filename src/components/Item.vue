@@ -7,7 +7,7 @@
     elevation="4"
   >
     <v-row align="center" justify="center" no-gutters class="pa-4">
-      <v-col cols="auto" class="text-center px-2">
+      <v-col cols="auto" class="text-center px-2" v-if="item.image">
         <v-progress-circular indeterminate v-if="imageLoading" />
         <v-img
           class="image elevation-5 mx-auto"

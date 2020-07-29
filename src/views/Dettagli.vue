@@ -12,9 +12,10 @@
         alt="image"
         style="border-radius: 20px; height: 300px; width: 100%; display: block; object-fit: cover "
         class="elevation-1"
+        v-if="item.image"
       />
 
-      <div>
+      <div style="grid-row: 2">
         <Chips :tags="item.tags" class="mx-4 mt-4" />
         <v-row class="mx-4 mt-4" no-gutters align="center">
           <v-col>
@@ -30,7 +31,7 @@
         </v-row>
       </div>
 
-      <div v-if="!alDialog" class="body-1 pa-4" id="text">
+      <div v-if="!alDialog" class="body-1 pa-4" id="text" style="grid-row: 3">
         {{ item.description }} <br />
         <span class="font-weight-bold">
           {{
@@ -45,7 +46,7 @@
         </p>
       </v-card-text>
 
-      <v-card-actions class="ma-0 pa-0">
+      <v-card-actions class="ma-0 pa-0" style="grid-row: 4">
         <v-row no-gutters>
           <v-col cols="6">
             <v-btn
@@ -117,7 +118,7 @@ export default {
 <style scoped>
 #container {
   height: calc(100vh - 130px);
-  grid-template-rows: 300px auto 1fr 50px;
+  grid-template-rows: auto auto 1fr 50px;
   row-gap: 10px;
 }
 #text {
