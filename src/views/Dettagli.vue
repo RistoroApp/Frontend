@@ -7,6 +7,8 @@
       v-if="!loading"
       style="border-radius: 20px; position: relative; display: grid"
     >
+      <!--  Display image   -->
+
       <img
         :src="backend + item.image.full"
         alt="image"
@@ -15,11 +17,13 @@
         v-if="item.image"
       />
 
-      <div style="grid-row: 2">
-        <Chips :tags="item.tags" class="mx-4 mt-4" />
-        <v-row class="mx-4 mt-4" no-gutters align="center">
+      <!--  Display tags, name and price   -->
+
+      <div style="grid-row: 2" class="px-5">
+        <Chips :tags="item.tags" class="mt-4" />
+        <v-row class="my-4" no-gutters align="center">
           <v-col>
-            <h2 class="ma-0 headline font-weight-regular">
+            <h2 class="ma-0 display-1 font-weight-light">
               {{ item.name }} {{ item.freezed ? "*" : "" }}
             </h2>
           </v-col>
@@ -31,35 +35,29 @@
         </v-row>
       </div>
 
-      <div v-if="!alDialog" class="body-1 pa-4" id="text" style="grid-row: 3">
-        {{ item.description }} <br />
-        <span class="font-weight-bold">
+      <!--  Display body and Allergens   -->
+
+      <div v-if="!alDialog" class="body-1 px-5" id="text" style="grid-row: 3">
+        <p class="body-1">{{ item.description }}</p>
+        <p class="font-weight-bold-2">
           {{
             item.freezed ? "* Questo piatto contiene ingredienti surgelati" : ""
           }}
-        </span>
-      </div>
-      <v-card-text v-if="alDialog" class="pb-12 mb-2 body-1">
-        <p v-for="allergen in item.allergens" :key="allergen._id" class="mb-2">
-          <span class="font-weight-bold">{{ allergen.name }}</span
-          >: {{ allergen.description }}
         </p>
-      </v-card-text>
+        <h3 class="heading mb-2 mt-9">Allergeni</h3>
+        <p>
+          <Chips :tags="item.allergens" allergen />
+        </p>
+      </div>
+
+      <!--  Display order button   -->
 
       <v-card-actions class="ma-0 pa-0" style="grid-row: 4">
         <v-row no-gutters>
-          <v-col cols="6">
+          <v-col cols="12">
             <v-btn
               class="ma-0 elevation-0"
-              style="width: 100%; border-radius: 0 0 0 20px; height: 50px"
-              @click="allergens"
-              >{{ alDialog ? "Chiudi" : "Mostra" }} Allergeni</v-btn
-            >
-          </v-col>
-          <v-col cols="6">
-            <v-btn
-              class="ma-0 elevation-0"
-              style="width: 100%; border-radius: 0 0 20px 0; height: 50px"
+              style="width: 100%; border-radius: 0 0 20px 20px; height: 50px"
               color="green lighten-2"
               @click="$store.dispatch('addOrder', item)"
               dark

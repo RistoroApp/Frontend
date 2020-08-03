@@ -1,5 +1,5 @@
 <template>
-  <v-row v-if="Array.isArray(tags) && tags.length" no-gutters>
+  <v-row v-if="Array.isArray(tags) && tags.length" no-gutters class="mx-n2">
     <v-col>
       <v-tooltip
         bottom
@@ -31,7 +31,15 @@
 <script>
 export default {
   name: "Chips",
-  props: ["tags"],
+  props: {
+    tags: {
+      type: Array
+    },
+    allergen: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       key: "1"
@@ -39,7 +47,9 @@ export default {
   },
   methods: {
     getColor(el) {
-      if (el.color) {
+      if (this.allergen) {
+        return {background: "#696969", text: '#FFFFFF'};
+      } else if (el.color) {
         return this.$store.getters.get_color(el.color);
       } else {
         return this.$store.getters.random_color;
