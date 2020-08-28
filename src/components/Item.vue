@@ -69,7 +69,6 @@ export default {
     }
   },
   async mounted() {
-    console.log(this.item.image);
     if (this.item.avatar && !this.item.avatar.startsWith("blob")) {
       try {
         await menu.getItemAvatar(this.item);

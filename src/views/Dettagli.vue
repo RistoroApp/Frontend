@@ -44,10 +44,14 @@
             item.freezed ? "* Questo piatto contiene ingredienti surgelati" : ""
           }}
         </p>
-        <h3 class="heading mb-2 mt-9" v-if="item.allergens.length > 0">Allergeni</h3>
-        <p>
-          <Chips :tags="item.allergens" allergen />
-        </p>
+        <div v-if="item.allergens && item.allergens.length > 0">
+          <h3 class="heading mb-2 mt-9">
+            Allergeni
+          </h3>
+          <p>
+            <Chips :tags="item.allergens" allergen />
+          </p>
+        </div>
       </div>
 
       <!--  Display order button   -->
